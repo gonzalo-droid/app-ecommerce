@@ -13,10 +13,10 @@
         android:layout_height="30dp"
         app:layout_constraintBottom_toTopOf="@+id/editTextMail"
         app:layout_constraintEnd_toStartOf="@+id/titleLogin"
-        app:layout_constraintHorizontal_bias="0.839"
+        app:layout_constraintHorizontal_bias="0.72"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.307"
+        app:layout_constraintVertical_bias="0.286"
         app:srcCompat="@drawable/back" />
 
     <TextView
@@ -97,6 +97,23 @@
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+    <Button
+        android:id="@+id/buttonFb"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:text="INGRESAR CON FACEBOOK"
+        android:textColor="@color/colorLight"
+        android:background="@drawable/button_facebook"
+        android:drawableStart="@drawable/ic_facebook"
+        android:drawableLeft="@drawable/ic_facebook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
 
     <TextView
         android:id="@+id/textQuestionLogin"
