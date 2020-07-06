@@ -7,12 +7,37 @@ public class EntityProduct {
     private String description_short;
     private String description_long;
     private String specifications;
+    private String miniPhoto;
+    private String price;
 
     public EntityProduct() {
     }
 
     public String getId() {
         return id;
+    }
+
+    public EntityProduct(String name, String description_short,String price,  String miniPhoto) {
+        this.name = name;
+        this.description_short = description_short;
+        this.price = price;
+        this.miniPhoto = miniPhoto;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getMiniPhoto() {
+        return miniPhoto;
+    }
+
+    public void setMiniPhoto(String miniPhoto) {
+        this.miniPhoto = miniPhoto;
     }
 
     public void setId(String id) {
