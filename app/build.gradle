@@ -50,14 +50,12 @@ dependencies {
     // Testing Navigation
     // noinspection GradleDependency
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
-
-
-    //picaso
+    
+    // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //noinspection GradleDependency
     implementation 'com.google.android.material:material:1.2.0-alpha03'
-
-
 
     // Firebase Auth
     implementation 'com.google.firebase:firebase-auth:19.3.1'
