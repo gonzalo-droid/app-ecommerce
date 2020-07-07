@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Correo"
-            app:hintTextColor="@color/colorPrimaryDark"
+            app:hintTextColor="@color/colorLight"
             tools:ignore="HardcodedText">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Contraseña"
-            app:hintTextColor="@color/colorPrimaryDark"
+            app:hintTextColor="@color/colorLight"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/colorLight"
             tools:ignore="HardcodedText">
@@ -148,7 +148,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
         android:text="¿Eres nuevo?"
         android:textColor="@color/colorLight"
@@ -165,7 +165,7 @@
         android:id="@+id/btnRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="24dp"
