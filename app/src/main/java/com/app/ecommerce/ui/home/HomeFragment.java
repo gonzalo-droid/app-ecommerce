@@ -152,13 +152,13 @@ public class HomeFragment extends Fragment {
         });*/
 
         lisProducts = new ArrayList<>();
-        lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Arroz con pato","pata criollo y arroz japones","23.4","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Ramen","sopa de anime","59.23","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Filete con pure","File al horno","11.11","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
+        lisProducts.add(new EntityProduct("Pollo a la brasa","extra1+extra2+extra3","45.90","https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSDPWhQsk8lciH1BaFEDETQTzNq5OoRZJ_SwQ&usqp=CAU"));
+        lisProducts.add(new EntityProduct("Arroz con pato","pata criollo y arroz japones","23.4","https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSDPWhQsk8lciH1BaFEDETQTzNq5OoRZJ_SwQ&usqp=CAU"));
+        lisProducts.add(new EntityProduct("Cerveza","extra1+extra2+extra3","45.90","https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSDPWhQsk8lciH1BaFEDETQTzNq5OoRZJ_SwQ&usqp=CAU"));
+        lisProducts.add(new EntityProduct("Tallarines","extra1+extra2+extra3","45.90","https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSDPWhQsk8lciH1BaFEDETQTzNq5OoRZJ_SwQ&usqp=CAU"));
+        lisProducts.add(new EntityProduct("Ramen","extra1+extra2+extra3","59.23","https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSDPWhQsk8lciH1BaFEDETQTzNq5OoRZJ_SwQ&usqp=CAU"));
+        lisProducts.add(new EntityProduct("Filete con pure","File al horno","11.11","https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSDPWhQsk8lciH1BaFEDETQTzNq5OoRZJ_SwQ&usqp=CAU"));
+        lisProducts.add(new EntityProduct("Cerveza","extra1+extra2+extra3","45.90","https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSDPWhQsk8lciH1BaFEDETQTzNq5OoRZJ_SwQ&usqp=CAU"));
         // asociamos el adaptador al recyclerview
         adapterProduct = new AdapterProduct(lisProducts);
 
@@ -185,6 +185,10 @@ public class HomeFragment extends Fragment {
         recyclerViewProducto.setAdapter(adapterProduct);
 
 
+    }
+
+    private void getCategories(){
+        
     }
 
     private void getInstance(View root){
