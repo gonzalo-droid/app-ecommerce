@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Correo"
-            app:hintTextColor="@color/colorLight"
+            app:hintTextColor="@color/colorPrimaryDark"
             tools:ignore="HardcodedText">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -72,13 +72,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Contraseña"
-            app:hintTextColor="@color/colorLight"
+            app:hintTextColor="@color/colorPrimaryDark"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/colorLight"
             tools:ignore="HardcodedText">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@id/contentPassword"
+                android:id="@id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -88,12 +88,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:id="@+id/btnForgetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:background="@color/colorTransparent"
             android:elevation="0dp"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:text="Olvidé mi contraseña"
             android:textColor="@color/colorLight"
             tools:targetApi="lollipop"
@@ -152,7 +153,7 @@
         android:text="¿Eres nuevo?"
         android:textColor="@color/colorLight"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnRegister"
         app:layout_constraintStart_toStartOf="parent"
@@ -171,7 +172,7 @@
         android:background="@color/colorTransparent"
         android:text="Regístrate"
         android:textColor="@color/colorWarning"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
