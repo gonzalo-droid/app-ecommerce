@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">API ECOMMERCE</string>
-    <string name="app_welcome">Your favorite Marketplace</string>
+    <string name="app_welcome">Tu tienda favorita</string>
 
     <string name="title_activity_menu">MenuActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

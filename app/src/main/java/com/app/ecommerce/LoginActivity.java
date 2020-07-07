@@ -41,9 +41,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // Buttons
-        btnRegister = findViewById(R.id.buttonRegister);
-        btnLogin = findViewById(R.id.buttonLogin);
-        btnFb = findViewById(R.id.buttonFb);
+        btnRegister = findViewById(R.id.btnRegister);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnFb = findViewById(R.id.btnFacebook);
 
         // Instances of Facebook and Firebase
         FacebookSdk.sdkInitialize(LoginActivity.this);

@@ -48,7 +48,7 @@
         android:fontFamily="@font/kalam"
         android:text="@string/app_welcome"
         android:textColor="@color/colorLight"
-        android:gravity="right"
+        android:gravity="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
