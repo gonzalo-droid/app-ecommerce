@@ -29,9 +29,10 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHo
     @Override
     public AdapterCategory.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_category,null,false);
+        /*
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        view.setLayoutParams(lp);
+        view.setLayoutParams(lp);*/
 
         view.setOnClickListener(this);
 
@@ -43,11 +44,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHo
 
         holder.entityCategory= listCategory.get(position);
         holder.tvName.setText(holder.entityCategory.getName());
-        Picasso.get()
-                .load(holder.entityCategory.getPhoto())
-                .resize(400,150)
-                .centerCrop()//img centrada
-                .into(holder.ivPhoto);
+
 
 
     }
@@ -72,13 +69,11 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
         public final TextView tvName;
-        public final ImageView ivPhoto;
         public EntityCategory entityCategory;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
             tvName=itemView.findViewById(R.id.tvNameCategory);
-            ivPhoto=itemView.findViewById(R.id.ivPhotoCategory);
 
         }
     }

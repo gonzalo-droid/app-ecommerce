@@ -5,47 +5,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     card_view:cardUseCompatPadding="true"
-    card_view:cardCornerRadius="20dp">
+    card_view:cardCornerRadius="20dp"
+    app:cardPreventCornerOverlap="true"
+    >
 
 <LinearLayout
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- Media -->
-    <ImageView
-        android:id="@+id/ivPhotoCategory"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:srcCompat="@drawable/ic_launcher_background"
-        android:scaleType="centerCrop"
-        android:contentDescription="Los mejores platos"
+    <!-- Title, secondary and supporting text -->
+    <TextView
+        android:id="@+id/tvNameCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pollo a la brasa"
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimary"
         />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
 
-        <!-- Title, secondary and supporting text -->
-        <TextView
-            android:id="@+id/tvNameCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pollo a la brasa"
-            android:layout_gravity="center"
-            android:textSize="20dp"
-            android:textColor="@color/colorPrimary"
-            />
-
-
-
-    </LinearLayout>
 
 </LinearLayout>
 
