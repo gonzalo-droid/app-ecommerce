@@ -4,22 +4,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.app.ecommerce.R;
-import com.app.ecommerce.ui.home.product.FullDialogProduct;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -35,6 +33,7 @@ public class HomeFragment extends Fragment {
 
     private  ArrayList<EntityCategory> listCategory;
     private boolean valorFresh = false;
+    private FloatingActionButton fab;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +45,32 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        getInstance(root);
+
+        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+
+            }
+        });
+
+
+        return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        getInstance(view);
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false));
         /*
@@ -100,29 +124,23 @@ public class HomeFragment extends Fragment {
         adapterCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Navigation.findNavController(v).navigate(R.id.productFragment);
+                /*
                 FullDialogProduct dialogProduct = new FullDialogProduct();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                dialogProduct.show(ft,FullDialogProduct.TAG);
+                dialogProduct.show(ft,FullDialogProduct.TAG);*/
 
             }
         });
 
         recyclerView.setAdapter(adapterCategory);
 
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
 
-            }
-        });
-
-
-        return root;
     }
 
-
-
     private void getInstance(View root){
+        fab = root.findViewById(R.id.fab);
         tilBuscar = root.findViewById(R.id.tilBuscar);
         recyclerView = root.findViewById(R.id.recyclerCategoria);
         swipeRefreshLayout = root.findViewById(R.id.swipeRecyclerCategoria);

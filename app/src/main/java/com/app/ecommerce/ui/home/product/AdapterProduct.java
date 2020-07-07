@@ -4,6 +4,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,15 +18,19 @@ import com.app.ecommerce.ui.home.EntityCategory;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHolder> implements View.OnClickListener {
+public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHolder> implements View.OnClickListener ,
+        Filterable {
 
 
     private ArrayList<EntityProduct> list;
+    private ArrayList<EntityProduct> listAll;
     private View.OnClickListener listener;
 
     public AdapterProduct(ArrayList<EntityProduct> list) {
         this.list = list;
+        this.listAll = new ArrayList<>(list);
     }
 
     @NonNull
@@ -73,11 +79,45 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
         }
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        // run on background thread
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<EntityProduct> filterList = new ArrayList<>();
+            if(constraint.toString().isEmpty()){
+                filterList.addAll(listAll);
+            }else {
+                for(EntityProduct product:listAll){
+                    if(product.getName().toLowerCase().contains(constraint.toString().toLowerCase())){
+                        filterList.add(product);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values=filterList;
+            return filterResults;
+        }
+
+        // run on a ui thread
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((Collection<? extends EntityProduct>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
         public final TextView tvTitle,tvDescription,tvPrice;
         public final ImageView ivPhoto;
-        private  final Button tbnAdd;
         public EntityProduct entityProduct;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,7 +125,6 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
             tvTitle=itemView.findViewById(R.id.tvTitle);
             tvDescription=itemView.findViewById(R.id.tvDescription);
             tvPrice=itemView.findViewById(R.id.tvPrice);
-            tbnAdd=itemView.findViewById(R.id.btnAdd);
             ivPhoto=itemView.findViewById(R.id.ivProductoList);
 
         }

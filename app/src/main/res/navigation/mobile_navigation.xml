@@ -9,17 +9,42 @@
         android:id="@+id/nav_home"
         android:name="com.app.ecommerce.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_productFragment"
+            app:destination="@id/productFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_carFragment"
+            app:destination="@id/carFragment" />
+    </fragment>
+
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.app.ecommerce.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_profle"
+        android:name="com.app.ecommerce.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.app.ecommerce.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="com.app.ecommerce.ui.home.product.ProductFragment"
+        android:label="@string/menu_product"
+        tools:layout="@layout/fragment_product" >
+        <action
+            android:id="@+id/action_productFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_productFragment_to_carFragment"
+            app:destination="@id/carFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/carFragment"
+        android:name="com.app.ecommerce.ui.car.CarFragment"
+        android:label="@string/car_sal"
+        tools:layout="@layout/fragment_car" />
 </navigation>

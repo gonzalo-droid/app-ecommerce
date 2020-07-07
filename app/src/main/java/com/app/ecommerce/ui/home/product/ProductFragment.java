@@ -1,59 +1,69 @@
 package com.app.ecommerce.ui.home.product;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.app.ecommerce.MenuActivity;
 import com.app.ecommerce.R;
-import com.app.ecommerce.ui.home.AdapterCategory;
-import com.app.ecommerce.ui.home.EntityCategory;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
-public class FullDialogProduct extends DialogFragment {
-    public static final String TAG = "FullScreenDialog";
-    private Toolbar toolbar;
+
+public class ProductFragment extends Fragment {
+
     private RecyclerView recyclerView;
-    private TextInputLayout tilBuscar;
     private SwipeRefreshLayout swipeRecyclerProducto;
     private  AdapterProduct adapterProduct;
     private  ArrayList<EntityProduct> lisProducts;
     private boolean valorFresh=false;
+    private FloatingActionButton fabCar;
+
+    public ProductFragment() {
+        // Required empty public constructor
+    }
+
+
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(FullDialogProduct.STYLE_NORMAL, R.style.FullScreenDialogStyle);
+        // definir menu de opciones propia del fragment
+        setHasOptionsMenu(true);
+
+        getActivity().setTitle("Producto");
+        if (getArguments() != null) {
+
+        }
     }
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_product, container, false);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         super.onCreateView(inflater, container, savedInstanceState);
-        View vista = getActivity().getLayoutInflater().inflate(R.layout.full_dialog_product, container, false);
-        getInstacias(vista);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getInstacias(view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false));
         /*
@@ -76,10 +86,13 @@ public class FullDialogProduct extends DialogFragment {
         });*/
 
         lisProducts = new ArrayList<>();
+        lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
         lisProducts.add(new EntityProduct("Arroz con pato","pata criollo y arroz japones","23.4","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
+        lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
         lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
         lisProducts.add(new EntityProduct("Ramen","sopa de anime","59.23","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
         lisProducts.add(new EntityProduct("Filete con pure","File al horno","11.11","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
+        lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
         // asociamos el adaptador al recyclerview
         adapterProduct = new AdapterProduct(lisProducts);
 
@@ -107,47 +120,47 @@ public class FullDialogProduct extends DialogFragment {
         adapterProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FullDialogProduct dialogProduct = new FullDialogProduct();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                dialogProduct.show(ft,FullDialogProduct.TAG);
+
 
             }
         });
 
         recyclerView.setAdapter(adapterProduct);
-
-        return  vista;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FullDialogProduct.this.dismiss();
-            }
-        });
-
-        toolbar.setTitle("Productos");
     }
 
     private void getInstacias(View vista) {
-        toolbar = vista.findViewById(R.id.toolbarProduct);
+
+        fabCar = vista.findViewById(R.id.fabProducto);
         swipeRecyclerProducto = vista.findViewById(R.id.swipeRecyclerProducto);
         recyclerView = vista.findViewById(R.id.recyclerProducto);
-        tilBuscar = vista.findViewById(R.id.tilBuscarProducto);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search,menu);
+    }
 
-        Dialog dialog = getDialog();
-        if (dialog != null) {
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
-            dialog.getWindow().setLayout(width, height);
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_search:
+                SearchView searchView = (SearchView) item.getActionView();
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        adapterProduct.getFilter().filter(newText);
+                        return false;
+                    }
+                });
+                //mostrarDialogNuevaNota();
+
+            default:
+                return super.onOptionsItemSelected(item) ;
         }
     }
 }
