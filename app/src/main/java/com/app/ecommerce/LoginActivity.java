@@ -37,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // EditTexts
+
+
         // Buttons
         btnRegister = findViewById(R.id.buttonRegister);
         btnLogin = findViewById(R.id.buttonLogin);

@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">ecommerce</string>
+    <string name="app_name">API ECOMMERCE</string>
+    <string name="app_welcome">Your favorite Marketplace</string>
+
     <string name="title_activity_menu">MenuActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -8,6 +10,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Menu -->
     <string name="menu_home">Inicio</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>

@@ -69,6 +69,12 @@ dependencies {
     // Dex File
     implementation 'com.android.support:multidex:1.0.3'
 
+    // Volley
+    implementation 'com.android.volley:volley:1.1.1'
+
+    // GSON
+    implementation 'com.google.code.gson:gson:2.8.6'
+
 }
 
 // Google Json
