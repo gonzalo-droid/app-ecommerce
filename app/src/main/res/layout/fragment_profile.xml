@@ -10,15 +10,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="192dp"
         android:gravity="center"
-        android:padding="20dp"
+        android:padding="24dp"
         android:background="@drawable/toolbar">
 
         <ImageView
             android:id="@+id/imgUser"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_user_profile_default"/>
 
@@ -26,24 +26,26 @@
             android:id="@+id/nameUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alvaro Puto"
-            android:textSize="20sp"
-            android:layout_toRightOf="@+id/imgUser"
+            android:text="User Name"
+            android:textSize="18sp"
+            android:layout_toEndOf="@+id/imgUser"
             android:layout_centerVertical="true"
             android:includeFontPadding="false"
             android:textStyle="bold"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginStart="24dp"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/typeSession"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Facebook"
+            android:text="Access Method"
             android:textSize="16sp"
-            android:layout_toRightOf="@+id/imgUser"
+            android:layout_toEndOf="@+id/imgUser"
             android:layout_below="@id/nameUser"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginStart="24dp"
+            tools:ignore="HardcodedText" />
 
     </RelativeLayout>
 
@@ -54,21 +56,24 @@
         android:padding="10dp">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardPurchases"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_margin="20dp"
             app:cardBackgroundColor="@color/colorPrimaryDark"
             android:elevation="10dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            tools:targetApi="lollipop">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp">
+                android:padding="5dp">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:id="@+id/imgPurchases"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     app:srcCompat="@drawable/ic_wish"
                     android:layout_centerHorizontal="true"/>
 
@@ -78,9 +83,10 @@
                     android:layout_height="wrap_content"
                     android:text="10"
                     android:textColor="@color/colorLight"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/quantityPurchasesText"
@@ -90,28 +96,32 @@
                     android:text="Compras"
                     android:textSize="14sp"
                     android:layout_below="@id/quantityPurchases"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    tools:ignore="HardcodedText" />
 
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardPoints"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_margin="20dp"
             app:cardBackgroundColor="@color/colorPrimaryDark"
             android:elevation="10dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            tools:targetApi="lollipop">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp">
+                android:padding="5dp">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:id="@+id/imgPoints"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     app:srcCompat="@drawable/ic_purchases"
                     android:layout_centerHorizontal="true"/>
 
@@ -121,19 +131,21 @@
                     android:layout_height="wrap_content"
                     android:text="100"
                     android:textColor="@color/colorLight"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/pointsPurchasesText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorLight"
-                    android:text="Puntos acumulados"
+                    android:text="Compras"
                     android:textSize="14sp"
                     android:layout_below="@id/pointsPurchases"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    tools:ignore="HardcodedText" />
 
             </RelativeLayout>
 
@@ -144,19 +156,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:padding="5dp">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contentNames"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombres">
+            android:hint="Nombres"
+            tools:ignore="HardcodedText">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/names"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_user"
+                android:drawableStart="@drawable/ic_user"
+                android:inputType="textPersonName"
                 android:drawablePadding="10dp"
-                android:text="Alvaro Puto" />
+                android:text="User Name" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -165,20 +181,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:padding="5dp">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contentEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña">
+            android:hint="Correo"
+            tools:ignore="HardcodedText">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:drawableLeft="@drawable/ic_password"
+                android:drawableStart="@drawable/ic_user"
                 android:drawablePadding="10dp"
-                android:text="Alvaro Puto" />
+                android:text="User Email" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/contentPaymentMethod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Método de Pago"
+            tools:ignore="HardcodedText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/paymentMethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_user"
+                android:drawablePadding="10dp"
+                android:text="User Name" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -197,7 +239,8 @@
         android:textAllCaps="false"
         android:textColor="@color/colorLight"
         android:textSize="14sp"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/buttonSignOut"
@@ -206,12 +249,13 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:background="@drawable/button"
+        android:background="@drawable/button_secondary"
         android:padding="10dp"
         android:text="CERRAR SESIÓN"
         android:textAllCaps="false"
-        android:textColor="@color/colorLight"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="14sp"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        tools:ignore="HardcodedText" />
 
 </LinearLayout>
