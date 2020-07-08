@@ -41,15 +41,20 @@
             android:layout_marginEnd="8dp"
             android:text="Ramen"
             android:textSize="20dp"
+            android:textColor="@color/colorPrimaryText"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="3"
             android:text="eggs+onion+moodles"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -63,6 +68,7 @@
             android:text="s/27.00"
             android:textSize="22dp"
             android:textStyle="bold"
+            android:textColor="@color/colorPrimaryText"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/tvDescription"
             app:layout_constraintTop_toBottomOf="@+id/tvDescription" />

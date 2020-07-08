@@ -11,6 +11,7 @@
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="20dp"
     app:cardPreventCornerOverlap="true"
+    app:cardBackgroundColor="@color/colorAccent"
     >
 
 <LinearLayout
@@ -26,7 +27,8 @@
         android:layout_height="wrap_content"
         android:text="Pollo a la brasa"
         android:textSize="20dp"
-        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textColor="@color/colorLight"
         />
 
 

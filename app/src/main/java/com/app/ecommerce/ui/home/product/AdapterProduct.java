@@ -52,7 +52,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
         holder.entityProduct= list.get(position);
         holder.tvTitle.setText(holder.entityProduct.getName());
         holder.tvDescription.setText(holder.entityProduct.getDescription_short());
-        holder.tvPrice.setText("S/"+holder.entityProduct.getPrice());
+        holder.tvPrice.setText("S/"+holder.entityProduct.getPrice_current());
         Picasso.get()
                 .load(holder.entityProduct.getMiniPhoto())
                 .resize(400,400)

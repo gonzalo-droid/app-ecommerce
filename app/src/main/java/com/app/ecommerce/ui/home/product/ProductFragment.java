@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,10 +21,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.app.ecommerce.MenuActivity;
 import com.app.ecommerce.R;
+import com.app.ecommerce.utilities.LoadingClass;
+import com.app.ecommerce.utilities.StaticVar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -35,6 +50,11 @@ public class ProductFragment extends Fragment {
     private  ArrayList<EntityProduct> lisProducts;
     private boolean valorFresh=false;
     private FloatingActionButton fabCar;
+
+    //consumo
+    public static final int MY_DEFAULT_TIMEOUT = 15000;
+    private JsonObjectRequest jsonObjectRequest;
+    private RequestQueue rqProductos;
 
     public ProductFragment() {
         // Required empty public constructor
@@ -65,6 +85,7 @@ public class ProductFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getInstacias(view);
+        getCarga();
 
         fabCar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +95,7 @@ public class ProductFragment extends Fragment {
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false));
-        /*
+
         recyclerView.setAdapter(new RecyclerView.Adapter() {
             @NonNull
             @Override
@@ -91,18 +112,8 @@ public class ProductFragment extends Fragment {
             public int getItemCount() {
                 return 0;
             }
-        });*/
+        });
 
-        lisProducts = new ArrayList<>();
-        lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Arroz con pato","pata criollo y arroz japones","23.4","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Ramen","sopa de anime","59.23","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Filete con pure","File al horno","11.11","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        lisProducts.add(new EntityProduct("Cerveza","toretto","45.90","https://loremflickr.com/cache/resized/65535_49788248126_d26e39154b_h_1000_800_nofilter.jpg"));
-        // asociamos el adaptador al recyclerview
-        adapterProduct = new AdapterProduct(lisProducts);
 
         swipeRecyclerProducto.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -110,39 +121,102 @@ public class ProductFragment extends Fragment {
                 // Esto se ejecuta cada vez que se realiza el gesto
                 swipeRecyclerProducto.setRefreshing(false);
                 valorFresh =true;
-                /*
-                if(tilBuscar.getEditText().getText().length() >= 3){
-                    //getCategories();
 
-                }else{
-                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                    alert.setMessage("Ingrese mínimo 3 caracteres")
-                            .setNegativeButton( "Reintentar",null)
-                            .create()
-                            .show();
-                }*/
             }
         });
 
 
-        adapterProduct.setOnClickListener(new View.OnClickListener() {
+
+        getProducts();
+    }
+
+    private void getProducts(){
+        final ArrayList<EntityProduct> list = new ArrayList<>();
+        String ruta = "https://www.codecix.com/api/ecommerce/todos-productos";
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ruta, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onClick(View v) {
+            public void onResponse(JSONObject response) {
+                Log.d("Tag-Productos",response.toString());
+                EntityProduct entityProduct = null;
+                try {
+                    JSONArray jsonArray = response.optJSONArray("data");
+                    for(int i =0;i < jsonArray.length();i++){
+                        entityProduct = new EntityProduct();
 
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        entityProduct.setId(jsonObject.optString("id"));
+                        entityProduct.setName(jsonObject.optString("name"));
+                        if(jsonObject.optString("description_short") != null){
+                            entityProduct.setDescription_short("");
+                        }else{
+                            entityProduct.setDescription_short(jsonObject.optString("description_short"));
+                        }
 
+                        if(jsonObject.optString("price_previous") != null){
+                            entityProduct.setPrice_previous("");
+                        }else{
+                            entityProduct.setPrice_previous(jsonObject.optString("price_previous"));
+                        }
+
+                        if(jsonObject.optString("discount") != null){
+                            entityProduct.setDiscount("");
+                        }else{
+                            entityProduct.setDiscount(jsonObject.optString("discount"));
+                        }
+
+                        entityProduct.setPrice_current(jsonObject.optString("price_current"));
+                        entityProduct.setCategory_id(jsonObject.optString("category_id"));
+                        entityProduct.setMiniPhoto(StaticVar.urlMiniPhoto+""+jsonObject.optString("image"));
+                        list.add(entityProduct);
+                    }
+
+                    adapterProduct = new AdapterProduct(list);
+                    adapterProduct.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Navigation.findNavController(v).navigate(R.id.productFragment);
+                        }
+                    });
+
+                    recyclerView.setAdapter(adapterProduct
+                    );
+                }catch (JSONException e){
+                    Log.d("tab-error-producto :",e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("tab-error-producto :",error.toString());
             }
         });
 
-        recyclerView.setAdapter(adapterProduct);
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_DEFAULT_TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rqProductos.add(jsonObjectRequest);
     }
 
     private void getInstacias(View vista) {
 
+        rqProductos = Volley.newRequestQueue(getActivity());
         fabCar = vista.findViewById(R.id.fabProducto);
         swipeRecyclerProducto = vista.findViewById(R.id.swipeRecyclerProducto);
         recyclerView = vista.findViewById(R.id.recyclerProducto);
     }
 
+    public void getCarga(){
+        final LoadingClass loadingClass = new LoadingClass(getActivity());
+        loadingClass.startLoadingDialog();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingClass.dismissDialog();
+            }
+        },2500);
+    }
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search,menu);

@@ -4,11 +4,14 @@ public class EntityProduct {
 
     private String id;
     private String name;
+    private String price_current;
+    private String price_previous;
+    private String discount;
     private String description_short;
     private String description_long;
     private String specifications;
     private String miniPhoto;
-    private String price;
+    private String category_id;
 
     public EntityProduct() {
     }
@@ -17,20 +20,38 @@ public class EntityProduct {
         return id;
     }
 
-    public EntityProduct(String name, String description_short,String price,  String miniPhoto) {
-        this.name = name;
-        this.description_short = description_short;
-        this.price = price;
-        this.miniPhoto = miniPhoto;
+    public String getPrice_current() {
+        return price_current;
     }
 
-    public String getPrice() {
-        return price;
+    public void setPrice_current(String price_current) {
+        this.price_current = price_current;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public String getPrice_previous() {
+        return price_previous;
     }
+
+    public void setPrice_previous(String price_previous) {
+        this.price_previous = price_previous;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(String category_id) {
+        this.category_id = category_id;
+    }
+
 
     public String getMiniPhoto() {
         return miniPhoto;

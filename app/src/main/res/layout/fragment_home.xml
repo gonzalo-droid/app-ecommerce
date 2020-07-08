@@ -13,7 +13,6 @@
         tools:context=".ui.home.HomeFragment">
 
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:orientation="horizontal"
                 android:id="@+id/recyclerCategoria"
