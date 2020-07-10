@@ -14,12 +14,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -170,12 +173,13 @@ public class ProductFragment extends Fragment {
                         list.add(entityProduct);
                     }
 
-                    adapterProduct = new AdapterProduct(list);
-                    adapterProduct.setOnClickListener(new View.OnClickListener() {
+                    adapterProduct = new AdapterProduct(list, new AdapterProduct.MyAdapterListener() {
                         @Override
-                        public void onClick(View v) {
-                            // Navigation.findNavController(v).navigate(R.id.productFragment);
+                        public void btnClick(View v, int position) {
+                            showAlerAddCar();
+                            Log.d("TAG", "iconTextViewOnClick at position "+ position);
                         }
+
                     });
 
                     recyclerView.setAdapter(adapterProduct
@@ -204,6 +208,23 @@ public class ProductFragment extends Fragment {
         fabCar = vista.findViewById(R.id.fabProducto);
         swipeRecyclerProducto = vista.findViewById(R.id.swipeRecyclerProducto);
         recyclerView = vista.findViewById(R.id.recyclerProducto);
+    }
+
+    private void showAlerAddCar(){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.alert_add_car,
+                (ViewGroup) getActivity().findViewById(R.id.alertAddCar));
+
+
+        TextView text = (TextView) layout.findViewById(R.id.tvAlert);
+        text.setText("Producto añadido en tu carrito de compras");
+
+        Toast toast = new Toast(getActivity());
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM,0,0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+
     }
 
     public void getCarga(){

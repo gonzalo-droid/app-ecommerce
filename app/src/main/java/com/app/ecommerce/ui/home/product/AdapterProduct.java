@@ -1,5 +1,7 @@
 package com.app.ecommerce.ui.home.product;
 
+import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +10,10 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.ecommerce.R;
@@ -17,6 +21,7 @@ import com.app.ecommerce.ui.home.AdapterCategory;
 import com.app.ecommerce.ui.home.EntityCategory;
 import com.squareup.picasso.Picasso;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -27,10 +32,17 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
     private ArrayList<EntityProduct> list;
     private ArrayList<EntityProduct> listAll;
     private View.OnClickListener listener;
+    public MyAdapterListener onClickListener;
 
-    public AdapterProduct(ArrayList<EntityProduct> list) {
+    public interface MyAdapterListener {
+
+        void btnClick(View v, int position);
+    }
+
+    public AdapterProduct(ArrayList<EntityProduct> list,MyAdapterListener myAdapterListener) {
         this.list = list;
         this.listAll = new ArrayList<>(list);
+        this.onClickListener= myAdapterListener;
     }
 
     @NonNull
@@ -58,6 +70,8 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
                 .resize(400,400)
                 .centerCrop()//img centrada
                 .into(holder.ivPhoto);
+
+        holder.onClickListener = this.onClickListener;
 
 
     }
@@ -114,11 +128,14 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
     };
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
         public final View view;
         public final TextView tvTitle,tvDescription,tvPrice;
         public final ImageView ivPhoto;
+        public  Button btn;
         public EntityProduct entityProduct;
+        public MyAdapterListener onClickListener;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
@@ -126,8 +143,17 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
             tvDescription=itemView.findViewById(R.id.tvDescription);
             tvPrice=itemView.findViewById(R.id.tvPrice);
             ivPhoto=itemView.findViewById(R.id.ivProductoList);
+            btn=itemView.findViewById(R.id.btnAdd);
+
+            btn.setOnClickListener(this);
 
         }
+
+        @Override
+        public void onClick(View v) {
+            onClickListener.btnClick(v, getAdapterPosition());
+        }
     }
+
 
 }

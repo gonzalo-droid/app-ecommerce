@@ -3,12 +3,17 @@ package com.app.ecommerce.ui.home;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -230,13 +235,32 @@ public class HomeFragment extends Fragment {
                             swipeRecyclerProducto.setRefreshing(false);
                         }
 
+                        adapterProduct = new AdapterProduct(list, new AdapterProduct.MyAdapterListener() {
+/*
+                            String name = list.get(recyclerView.getChildAdapterPosition(v)).getName() ;
+
+                                Log.d("TAG", "iconTextViewOnClick at position "+position+"---"+name);
+                                */
+
+                            @Override
+                            public void btnClick(View v, int position) {
+                                showAlerAddCar();
+                                Log.d("TAG", "iconTextViewOnClick at position "+position);
+
+
+
+                            }
+
+                        });
+                        /*
                         adapterProduct = new AdapterProduct(list);
                         adapterProduct.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 // Navigation.findNavController(v).navigate(R.id.productFragment);
+
                             }
-                        });
+                        });*/
 
                         recyclerViewProducto.setAdapter(adapterProduct);
                     }
@@ -306,6 +330,25 @@ public class HomeFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         rqCategoias.add(jsonObjectRequest);
     }
+
+    private void showAlerAddCar(){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.alert_add_car,
+                (ViewGroup) getActivity().findViewById(R.id.alertAddCar));
+
+
+        TextView text = (TextView) layout.findViewById(R.id.tvAlert);
+        text.setText("Producto añadido");
+
+        Toast toast = new Toast(getActivity());
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM | Gravity.LEFT,20,20);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+
+    }
+
+
 
     private void getInstance(View root){
 
