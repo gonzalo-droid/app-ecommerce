@@ -65,7 +65,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/contentName"
-            style="@style/EditTextHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombres"
@@ -73,7 +72,7 @@
             tools:ignore="HardcodedText">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/name"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
@@ -84,7 +83,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/contentEmail"
-            style="@style/EditTextHint"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Correo"
@@ -92,7 +91,7 @@
             tools:ignore="HardcodedText">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -103,7 +102,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/contentPassword"
-            style="@style/EditTextHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Contraseña"
@@ -113,7 +111,7 @@
             tools:ignore="HardcodedText">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -124,7 +122,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/contentPasswordConfirmation"
-            style="@style/EditTextHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Confirmar contraseña"
@@ -134,7 +131,7 @@
             tools:ignore="HardcodedText">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordConfirmation"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
