@@ -1,7 +1,8 @@
-package com.app.ecommerce;
+package com.app.ecommerce.ui;
 
 import android.os.Bundle;
 
+import com.app.ecommerce.R;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;

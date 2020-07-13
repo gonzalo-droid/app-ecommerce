@@ -1,4 +1,4 @@
-package com.app.ecommerce;
+package com.app.ecommerce.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.app.ecommerce.R;
 
 public class MainActivity extends AppCompatActivity {
 

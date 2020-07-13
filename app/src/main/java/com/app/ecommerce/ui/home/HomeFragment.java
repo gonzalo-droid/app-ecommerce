@@ -1,5 +1,6 @@
 package com.app.ecommerce.ui.home;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
@@ -37,6 +39,7 @@ import com.app.ecommerce.R;
 import com.app.ecommerce.ui.home.product.AdapterProduct;
 import com.app.ecommerce.ui.home.product.EntityProduct;
 import com.app.ecommerce.utilities.LoadingClass;
+import com.app.ecommerce.utilities.SharePreferenceConfig;
 import com.app.ecommerce.utilities.StaticVar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -174,7 +177,7 @@ public class HomeFragment extends Fragment {
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ruta, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("Tag-Productos",response.toString());
+              //  Log.d("Tag-Productos",response.toString());
                 EntityProduct entityProduct = null;
                 try {
                     JSONArray jsonArray = response.optJSONArray("data");
@@ -236,31 +239,20 @@ public class HomeFragment extends Fragment {
                         }
 
                         adapterProduct = new AdapterProduct(list, new AdapterProduct.MyAdapterListener() {
-/*
+                            /*
                             String name = list.get(recyclerView.getChildAdapterPosition(v)).getName() ;
-
-                                Log.d("TAG", "iconTextViewOnClick at position "+position+"---"+name);
                                 */
-
                             @Override
                             public void btnClick(View v, int position) {
                                 showAlerAddCar();
-                                Log.d("TAG", "iconTextViewOnClick at position "+position);
-
-
-
+                                String name = list.get(position).getName().toString();
+                                String id = list.get(position).getId().toString();
+                                Log.d("TAG", "position "+position
+                                +" id: "+id
+                                +" name: "+name);
                             }
 
                         });
-                        /*
-                        adapterProduct = new AdapterProduct(list);
-                        adapterProduct.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                // Navigation.findNavController(v).navigate(R.id.productFragment);
-
-                            }
-                        });*/
 
                         recyclerViewProducto.setAdapter(adapterProduct);
                     }
@@ -290,7 +282,7 @@ public class HomeFragment extends Fragment {
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ruta, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("Tag-Categorias",response.toString());
+              //  Log.d("Tag-Categorias",response.toString());
                 EntityCategory entityCategory;
                 try {
                     JSONArray jsonArray = response.optJSONArray("data");
@@ -308,6 +300,8 @@ public class HomeFragment extends Fragment {
                     adapterCategory.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            String idCat = list.get(recyclerView.getChildAdapterPosition(v)).getId();
+                            SharePreferenceConfig.getInstance(getActivity()).setCategoryId(idCat);
                             Navigation.findNavController(v).navigate(R.id.productFragment);
                         }
                     });

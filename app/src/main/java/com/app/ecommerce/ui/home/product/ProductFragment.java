@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,12 +30,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.app.ecommerce.MenuActivity;
 import com.app.ecommerce.R;
+import com.app.ecommerce.api.ProductCategoryRequest;
+import com.app.ecommerce.api.RegistroRequest;
+import com.app.ecommerce.ui.RegisterActivity;
 import com.app.ecommerce.utilities.LoadingClass;
+import com.app.ecommerce.utilities.SharePreferenceConfig;
 import com.app.ecommerce.utilities.StaticVar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,6 +55,7 @@ public class ProductFragment extends Fragment {
     private  ArrayList<EntityProduct> lisProducts;
     private boolean valorFresh=false;
     private FloatingActionButton fabCar;
+    private ProductCategoryRequest productCategoryRequest;
 
     //consumo
     public static final int MY_DEFAULT_TIMEOUT = 15000;
@@ -134,12 +137,14 @@ public class ProductFragment extends Fragment {
     }
 
     private void getProducts(){
+
+        String ruta= "https://www.codecix.com/api/ecommerce/categoria/productos";
         final ArrayList<EntityProduct> list = new ArrayList<>();
-        String ruta = "https://www.codecix.com/api/ecommerce/todos-productos";
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ruta, null, new Response.Listener<JSONObject>() {
+        Response.Listener<JSONObject> respuesta = new Response.Listener<JSONObject>(){
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("Tag-Productos",response.toString());
+                Log.d("Tag->","hola");
                 EntityProduct entityProduct = null;
                 try {
                     JSONArray jsonArray = response.optJSONArray("data");
@@ -149,19 +154,19 @@ public class ProductFragment extends Fragment {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         entityProduct.setId(jsonObject.optString("id"));
                         entityProduct.setName(jsonObject.optString("name"));
-                        if(jsonObject.optString("description_short") != null){
+                        if(jsonObject.optString("description_short") == null){
                             entityProduct.setDescription_short("");
                         }else{
                             entityProduct.setDescription_short(jsonObject.optString("description_short"));
                         }
 
-                        if(jsonObject.optString("price_previous") != null){
+                        if(jsonObject.optString("price_previous") == null){
                             entityProduct.setPrice_previous("");
                         }else{
                             entityProduct.setPrice_previous(jsonObject.optString("price_previous"));
                         }
 
-                        if(jsonObject.optString("discount") != null){
+                        if(jsonObject.optString("discount") == null){
                             entityProduct.setDiscount("");
                         }else{
                             entityProduct.setDiscount(jsonObject.optString("discount"));
@@ -173,33 +178,63 @@ public class ProductFragment extends Fragment {
                         list.add(entityProduct);
                     }
 
-                    adapterProduct = new AdapterProduct(list, new AdapterProduct.MyAdapterListener() {
-                        @Override
-                        public void btnClick(View v, int position) {
-                            showAlerAddCar();
-                            Log.d("TAG", "iconTextViewOnClick at position "+ position);
+                    if(list.size() == 0){
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                        recyclerView.setAdapter(new RecyclerView.Adapter() {
+
+                            @NonNull
+                            @Override
+                            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                                return null;
+                            }
+
+                            @Override
+                            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+                            }
+
+                            @Override
+                            public int getItemCount() {
+                                return 0;
+                            }
+                        });
+                    }else{
+
+                        if(valorFresh){
+                            valorFresh=false;
+                            swipeRecyclerProducto.setRefreshing(false);
                         }
 
-                    });
+                        adapterProduct = new AdapterProduct(list, new AdapterProduct.MyAdapterListener() {
+                            /*
+                            String name = list.get(recyclerView.getChildAdapterPosition(v)).getName() ;
+                                */
+                            @Override
+                            public void btnClick(View v, int position) {
+                                showAlerAddCar();
+                                String name = list.get(position).getName().toString();
+                                String id = list.get(position).getId().toString();
+                                Log.d("TAG", "position "+position
+                                        +" id: "+id
+                                        +" name: "+name);
+                            }
 
-                    recyclerView.setAdapter(adapterProduct
-                    );
-                }catch (JSONException e){
-                    Log.d("tab-error-producto :",e.toString());
+                        });
+
+                        recyclerView.setAdapter(adapterProduct);
+                    }
+
+                } catch (JSONException e) {
+                    e.getMessage();
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("tab-error-producto :",error.toString());
-            }
-        });
 
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_DEFAULT_TIMEOUT,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        rqProductos.add(jsonObjectRequest);
+        };
+
+        String id = SharePreferenceConfig.getInstance(getActivity()).getCategoryId();
+        productCategoryRequest = new ProductCategoryRequest(id,ruta,respuesta);
+        RequestQueue cola = Volley.newRequestQueue(getActivity());
+        cola.add(productCategoryRequest);
     }
 
     private void getInstacias(View vista) {

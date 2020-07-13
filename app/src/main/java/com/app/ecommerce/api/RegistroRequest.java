@@ -1,4 +1,4 @@
-package com.app.ecommerce;
+package com.app.ecommerce.api;
 
 import com.android.volley.Request;
 import com.android.volley.Response;

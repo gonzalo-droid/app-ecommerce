@@ -52,9 +52,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(lp);
-
         view.setOnClickListener(this);
-
         return new AdapterProduct.ViewHolder(view);
     }
 

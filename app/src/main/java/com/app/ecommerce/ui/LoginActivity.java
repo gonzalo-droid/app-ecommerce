@@ -1,14 +1,15 @@
-package com.app.ecommerce;
+package com.app.ecommerce.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.app.ecommerce.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -137,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
     // Go to Menu Activity
     private void goMenu(){
         // getCarga();
-        Intent i = new Intent(this,MenuActivity.class);
+        Intent i = new Intent(this, MenuActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }

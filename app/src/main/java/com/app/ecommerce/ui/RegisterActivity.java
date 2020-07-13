@@ -1,6 +1,5 @@
-package com.app.ecommerce;
+package com.app.ecommerce.ui;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,6 +13,8 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.app.ecommerce.R;
+import com.app.ecommerce.api.RegistroRequest;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
