@@ -20,7 +20,8 @@ public class ApiUser {
     private static final String URL_REGISTER_USER = "https://www.codecix.com/api/ecommerce/registro";
 
     // Register User (Refactoring)
-    public static void registerUser(AppCompatActivity activity, final String name, final String email, final String password, final String password_confirmation) {
+    public static void registerUser(AppCompatActivity activity, final String name, final String email,
+                                    final String password, final String password_confirmation) {
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER_USER,
                 new Response.Listener<String>() {

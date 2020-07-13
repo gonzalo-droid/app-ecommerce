@@ -137,104 +137,110 @@ public class ProductFragment extends Fragment {
     }
 
     private void getProducts(){
-
-        String ruta= "https://www.codecix.com/api/ecommerce/categoria/productos";
         final ArrayList<EntityProduct> list = new ArrayList<>();
-        Response.Listener<JSONObject> respuesta = new Response.Listener<JSONObject>(){
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("Tag-Productos",response.toString());
-                Log.d("Tag->","hola");
-                EntityProduct entityProduct = null;
-                try {
-                    JSONArray jsonArray = response.optJSONArray("data");
-                    for(int i =0;i < jsonArray.length();i++){
-                        entityProduct = new EntityProduct();
-
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        entityProduct.setId(jsonObject.optString("id"));
-                        entityProduct.setName(jsonObject.optString("name"));
-                        if(jsonObject.optString("description_short") == null){
-                            entityProduct.setDescription_short("");
-                        }else{
-                            entityProduct.setDescription_short(jsonObject.optString("description_short"));
-                        }
-
-                        if(jsonObject.optString("price_previous") == null){
-                            entityProduct.setPrice_previous("");
-                        }else{
-                            entityProduct.setPrice_previous(jsonObject.optString("price_previous"));
-                        }
-
-                        if(jsonObject.optString("discount") == null){
-                            entityProduct.setDiscount("");
-                        }else{
-                            entityProduct.setDiscount(jsonObject.optString("discount"));
-                        }
-
-                        entityProduct.setPrice_current(jsonObject.optString("price_current"));
-                        entityProduct.setCategory_id(jsonObject.optString("category_id"));
-                        entityProduct.setMiniPhoto(StaticVar.urlMiniPhoto+""+jsonObject.optString("image"));
-                        list.add(entityProduct);
-                    }
-
-                    if(list.size() == 0){
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                        recyclerView.setAdapter(new RecyclerView.Adapter() {
-
-                            @NonNull
-                            @Override
-                            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                                return null;
-                            }
-
-                            @Override
-                            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-                            }
-
-                            @Override
-                            public int getItemCount() {
-                                return 0;
-                            }
-                        });
-                    }else{
-
-                        if(valorFresh){
-                            valorFresh=false;
-                            swipeRecyclerProducto.setRefreshing(false);
-                        }
-
-                        adapterProduct = new AdapterProduct(list, new AdapterProduct.MyAdapterListener() {
-                            /*
-                            String name = list.get(recyclerView.getChildAdapterPosition(v)).getName() ;
-                                */
-                            @Override
-                            public void btnClick(View v, int position) {
-                                showAlerAddCar();
-                                String name = list.get(position).getName().toString();
-                                String id = list.get(position).getId().toString();
-                                Log.d("TAG", "position "+position
-                                        +" id: "+id
-                                        +" name: "+name);
-                            }
-
-                        });
-
-                        recyclerView.setAdapter(adapterProduct);
-                    }
-
-                } catch (JSONException e) {
-                    e.getMessage();
-                }
-            }
-
-        };
-
         String id = SharePreferenceConfig.getInstance(getActivity()).getCategoryId();
-        productCategoryRequest = new ProductCategoryRequest(id,ruta,respuesta);
-        RequestQueue cola = Volley.newRequestQueue(getActivity());
-        cola.add(productCategoryRequest);
+        String ruta = "https://www.codecix.com/api/ecommerce/filter-product/"+id;
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ruta, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Tag-Productos",response.toString());
+                        EntityProduct entityProduct = null;
+                        try {
+                            JSONArray jsonArray = response.optJSONArray("data");
+                            for(int i =0;i < jsonArray.length();i++){
+                                entityProduct = new EntityProduct();
+
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                entityProduct.setId(jsonObject.optString("id"));
+                                entityProduct.setName(jsonObject.optString("name"));
+                                if(jsonObject.optString("description_short") == null){
+                                    entityProduct.setDescription_short("");
+                                }else{
+                                    entityProduct.setDescription_short(jsonObject.optString("description_short"));
+                                }
+
+                                if(jsonObject.optString("price_previous") == null){
+                                    entityProduct.setPrice_previous("");
+                                }else{
+                                    entityProduct.setPrice_previous(jsonObject.optString("price_previous"));
+                                }
+
+                                if(jsonObject.optString("discount") == null){
+                                    entityProduct.setDiscount("");
+                                }else{
+                                    entityProduct.setDiscount(jsonObject.optString("discount"));
+                                }
+
+                                entityProduct.setPrice_current(jsonObject.optString("price_current"));
+                                entityProduct.setCategory_id(jsonObject.optString("category_id"));
+                                entityProduct.setMiniPhoto(StaticVar.urlMiniPhoto+""+jsonObject.optString("image"));
+                                list.add(entityProduct);
+                            }
+
+                            if(list.size() == 0){
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                                recyclerView.setAdapter(new RecyclerView.Adapter() {
+
+                                    @NonNull
+                                    @Override
+                                    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+                                    }
+
+                                    @Override
+                                    public int getItemCount() {
+                                        return 0;
+                                    }
+                                });
+                            }else{
+
+                                if(valorFresh){
+                                    valorFresh=false;
+                                    swipeRecyclerProducto.setRefreshing(false);
+                                }
+
+                                adapterProduct = new AdapterProduct(list, new AdapterProduct.MyAdapterListener() {
+                                    /*
+                                    String name = list.get(recyclerView.getChildAdapterPosition(v)).getName() ;
+                                        */
+                                    @Override
+                                    public void btnClick(View v, int position) {
+                                        showAlerAddCar();
+                                        String name = list.get(position).getName().toString();
+                                        String id = list.get(position).getId().toString();
+                                        Log.d("TAG", "position "+position
+                                                +" id: "+id
+                                                +" name: "+name);
+                                    }
+
+                                });
+
+                                recyclerView.setAdapter(adapterProduct);
+                            }
+
+
+                        }catch (JSONException e){
+                            Log.d("tab-error-producto :",e.toString());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("tab-error-producto :",error.toString());
+            }
+        });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_DEFAULT_TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        rqProductos.add(jsonObjectRequest);
     }
 
     private void getInstacias(View vista) {
@@ -252,10 +258,10 @@ public class ProductFragment extends Fragment {
 
 
         TextView text = (TextView) layout.findViewById(R.id.tvAlert);
-        text.setText("Producto añadido en tu carrito de compras");
+        text.setText("Producto añadido");
 
         Toast toast = new Toast(getActivity());
-        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM,0,0);
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM | Gravity.LEFT,20,20);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         toast.show();

@@ -174,7 +174,8 @@ public class HomeFragment extends Fragment {
     private void getProducts(){
         final ArrayList<EntityProduct> list = new ArrayList<>();
         String ruta = "https://www.codecix.com/api/ecommerce/todos-productos";
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ruta, null, new Response.Listener<JSONObject>() {
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ruta, null,
+                new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
               //  Log.d("Tag-Productos",response.toString());
