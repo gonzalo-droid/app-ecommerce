@@ -214,9 +214,11 @@ public class ProductFragment extends Fragment {
                                         showAlerAddCar();
                                         String name = list.get(position).getName().toString();
                                         String id = list.get(position).getId().toString();
+                                       // list.get(position).setName("holi");
                                         Log.d("TAG", "position "+position
                                                 +" id: "+id
                                                 +" name: "+name);
+                                       // adapterProduct.notifyDataSetChanged();
                                     }
 
                                 });

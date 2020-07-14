@@ -67,7 +67,8 @@ public class HomeFragment extends Fragment {
     private JsonObjectRequest jsonObjectRequest;
     private RequestQueue rqCategoias;
     private RequestQueue rqProductos;
-
+    private ArrayList<EntityCategory> list ;
+    private ArrayList<EntityProduct> listProductos;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +96,11 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        list = new ArrayList<>();
+        listProductos = new ArrayList<>();
         getInstance(view);
         getCarga();
+
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +176,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getProducts(){
-        final ArrayList<EntityProduct> list = new ArrayList<>();
+
         String ruta = "https://www.codecix.com/api/ecommerce/todos-productos";
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ruta, null,
                 new Response.Listener<JSONObject>() {
@@ -209,10 +213,10 @@ public class HomeFragment extends Fragment {
                         entityProduct.setPrice_current(jsonObject.optString("price_current"));
                         entityProduct.setCategory_id(jsonObject.optString("category_id"));
                         entityProduct.setMiniPhoto(StaticVar.urlMiniPhoto+""+jsonObject.optString("image"));
-                        list.add(entityProduct);
+                        listProductos.add(entityProduct);
                     }
 
-                    if(list.size() == 0){
+                    if(listProductos.size() == 0){
                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                         recyclerView.setAdapter(new RecyclerView.Adapter() {
 
@@ -239,15 +243,15 @@ public class HomeFragment extends Fragment {
                             swipeRecyclerProducto.setRefreshing(false);
                         }
 
-                        adapterProduct = new AdapterProduct(list, new AdapterProduct.MyAdapterListener() {
+                        adapterProduct = new AdapterProduct(listProductos, new AdapterProduct.MyAdapterListener() {
                             /*
                             String name = list.get(recyclerView.getChildAdapterPosition(v)).getName() ;
                                 */
                             @Override
                             public void btnClick(View v, int position) {
                                 showAlerAddCar();
-                                String name = list.get(position).getName().toString();
-                                String id = list.get(position).getId().toString();
+                                String name = listProductos.get(position).getName().toString();
+                                String id = listProductos.get(position).getId().toString();
                                 Log.d("TAG", "position "+position
                                 +" id: "+id
                                 +" name: "+name);
@@ -278,7 +282,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getCategories(){
-        final ArrayList<EntityCategory> list = new ArrayList<>();
+
         String ruta = "https://www.codecix.com/api/ecommerce/todos-categorias";
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ruta, null, new Response.Listener<JSONObject>() {
             @Override
